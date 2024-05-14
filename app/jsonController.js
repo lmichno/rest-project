@@ -1,0 +1,25 @@
+import fs, { mkdir } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { photos, add } from './model';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const photoDataHandler = (data, album, timestamp) => {
+    const photo = {
+        'id': timestamp,
+        'album': album,
+        'originamName': data.originalFilename,
+        'url': path.join('upload', album, data.newFilename),
+        'lastChange': 'original',
+        'history': [
+            {
+                'status': 'original',
+                'timestamp': timestamp,
+            }
+        ]
+    }
+}
+
+export { photoDataHandler };
