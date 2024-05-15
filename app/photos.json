@@ -1,18 +1,5 @@
 [
      {
-          "id": 1715771807923,
-          "album": "albumOne",
-          "originamName": "Zrzut ekranu 2023-04-01 192637.png",
-          "url": "upload\\albumOne\\52427525136de593a0060f100",
-          "lastChange": "original",
-          "history": [
-               {
-                    "status": "original",
-                    "timestamp": 1715771807923
-               }
-          ]
-     },
-     {
           "id": 1715771848313,
           "album": "albumOne",
           "originamName": "Zrzut ekranu 2023-04-01 192637.png",

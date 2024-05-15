@@ -2,6 +2,7 @@ import fs, { mkdir } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { photos, add } from './model.js';
+import { replace } from './model.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,4 +32,15 @@ const getSiglePhotoData = (id) => {
     return photos.find(photo => photo.id == id);
 }
 
-export { photoDataHandler, getAllPhotosData, getSiglePhotoData };
+const deleteSinglePhotoData = (id) => {
+    if (!photos.find(photo => photo.id == id)) {
+        return 'Photo with id' + id + ' not found!';
+    }
+    else {
+        const newPhotos = photos.filter(photo => photo.id != id);
+        replace(newPhotos);
+        return 'Photo with id' + id + ' deleted successfully!';
+    }
+}
+
+export { photoDataHandler, getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData };

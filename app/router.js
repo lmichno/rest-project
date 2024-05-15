@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import getRequestData from './getRequestData.js';
 import { imgHandler } from './fileController.js';
-import { getAllPhotosData, getSiglePhotoData } from './jsonController.js';
+import { getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData } from './jsonController.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,8 +31,13 @@ const router = async (req, res) => {
         }
     }
     else if (req.url.match(/\/api\/photos\/([0-9]+)/) && req.method == 'DELETE') {
+        const id = req.url.match(/\/api\/photos\/([0-9]+)/)[1];
+        const message = deleteSinglePhotoData(id);
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end(message);
     }
     else if (req.url == '/api/photos' && req.method == 'PATCH') {
+
     }
 }
 
