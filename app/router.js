@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import getRequestData from './getRequestData.js';
 import { imgHandler } from './fileController.js';
-import { getAllPhotosData } from './jsonController.js';
+import { getAllPhotosData, getSiglePhotoData } from './jsonController.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +19,16 @@ const router = async (req, res) => {
         imgHandler(req, res);
     }
     else if (req.url.match(/\/api\/photos\/([0-9]+)/) && req.method == 'GET') {
+        const id = req.url.match(/\/api\/photos\/([0-9]+)/)[1];
+        const photo = getSiglePhotoData(id);
+        if (photo) {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(JSON.stringify(photo, null, 5));
+        }
+        else {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('Photo not found');
+        }
     }
     else if (req.url.match(/\/api\/photos\/([0-9]+)/) && req.method == 'DELETE') {
     }

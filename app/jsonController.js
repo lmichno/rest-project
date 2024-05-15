@@ -27,4 +27,8 @@ const getAllPhotosData = () => {
     return photos;
 }
 
-export { photoDataHandler, getAllPhotosData };
+const getSiglePhotoData = (id) => {
+    return photos.find(photo => photo.id == id);
+}
+
+export { photoDataHandler, getAllPhotosData, getSiglePhotoData };
