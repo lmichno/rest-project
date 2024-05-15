@@ -1,7 +1,16 @@
+import { replacePhotosJsonData } from './fileController.js';
+
 let photos = [];
 
 const add = (photo) => {
     photos.push(photo);
+    replacePhotosJsonData();
+    console.log('Photo added successfully!');
 }
 
-export { add, photos };
+const replace = (data) => {
+    photos = data;
+    replacePhotosJsonData();
+}
+
+export { add, photos, replace };

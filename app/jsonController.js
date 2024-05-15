@@ -1,7 +1,7 @@
 import fs, { mkdir } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { photos, add } from './model';
+import { photos, add } from './model.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +20,11 @@ const photoDataHandler = (data, album, timestamp) => {
             }
         ]
     }
+    add(photo);
 }
 
-export { photoDataHandler };
+const getAllPhotosData = () => {
+    return photos;
+}
+
+export { photoDataHandler, getAllPhotosData };

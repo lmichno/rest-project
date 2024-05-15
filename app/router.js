@@ -4,14 +4,16 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import getRequestData from './getRequestData.js';
 import { imgHandler } from './fileController.js';
+import { getAllPhotosData } from './jsonController.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const router = async (req, res) => {
     if (req.url == '/api/photos' && req.method == 'GET') {
-
-        res.end(JSON.stringify(functions.getAll(), null, 5));
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end(JSON.stringify(getAllPhotosData(), null, 5));
     }
     else if (req.url == '/api/photos' && req.method == 'POST') {
         imgHandler(req, res);

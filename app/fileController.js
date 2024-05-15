@@ -2,7 +2,8 @@ import fs, { mkdir } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import formidable from 'formidable';
-import { photoDataHandler } from './jsonController';
+import { photoDataHandler } from './jsonController.js';
+import { photos } from './model.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +15,6 @@ const imgHandler = (data, res) => {
             console.error(err);
             return;
         }
-        console.log(files);
         const oldPath = files.img[0].filepath;
         const album = fields.album[0];
         const newPath = path.join(__dirname, 'upload', album, files.img[0].newFilename);
@@ -30,7 +30,8 @@ const imgHandler = (data, res) => {
                 }
                 return;
             }
-            console.log('Directory created successfully!');
+            else {
+            }
         });
 
         fs.rename(oldPath, newPath, (err) => {
@@ -42,7 +43,17 @@ const imgHandler = (data, res) => {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('File uploaded!');
         });
+        photoDataHandler(files.img[0], album, timestamp)
     });
 }
 
-export { imgHandler };
+const replacePhotosJsonData = () => {
+    fs.writeFile(path.join(__dirname, 'photos.json'), JSON.stringify(photos, null, 5), (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+    });
+}
+
+export { imgHandler, replacePhotosJsonData };
