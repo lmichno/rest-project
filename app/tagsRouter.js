@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import getRequestData from './getRequestData.js';
 import { imgHandler } from './fileController.js';
-import { getRawTags, getTags, getSingleTag, addTag } from './tagsController.js';
+import { getRawTags, getTags, getSingleTag, addTag, patchSingleTag } from './tagsController.js';
 import formidable from 'formidable';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +42,44 @@ const tagsRouter = async (req, res) => {
                 return;
             }
             message = addTag(fields);
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(message);
+        });
+    }
+    else if (req.url.match(/\/api\/tags/) && req.method == 'PATCH') {
+        const form = formidable({});
+        let message;
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            const tagID = fields.tagID[0];
+            const photoID = fields.photoID[0];
+
+            message = patchSingleTag(tagID, photoID);
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(message);
+        });
+    }
+    else if (req.url == '/api/tags/mass' && req.method == 'PATCH') {
+        const form = formidable({});
+        let message;
+
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            const tags = fields.tags;
+            const photoID = fields.photoID[0];
+            tags.forEach(tag => {
+                message = patchSingleTag(tag, photoID);
+                if (message != 'Photo tag updated successfully!') {
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end(message);
+                }
+            });
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end(message);
         });
