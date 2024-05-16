@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import formidable from 'formidable';
 import { photoDataHandler } from './jsonController.js';
-import { photos } from './model.js';
+import { photos, tags } from './model.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,4 +56,13 @@ const replacePhotosJsonData = () => {
     });
 }
 
-export { imgHandler, replacePhotosJsonData };
+const replaceTagsJsonData = () => {
+    fs.writeFile(path.join(__dirname, 'tags.json'), JSON.stringify(tags, null, 5), (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+    });
+}
+
+export { imgHandler, replacePhotosJsonData, replaceTagsJsonData };

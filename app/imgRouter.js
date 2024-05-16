@@ -10,7 +10,7 @@ import { getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData, patchSingle
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const router = async (req, res) => {
+const imgRouter = async (req, res) => {
     if (req.url == '/api/photos' && req.method == 'GET') {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end(JSON.stringify(getAllPhotosData(), null, 5));
@@ -44,4 +44,4 @@ const router = async (req, res) => {
     }
 }
 
-export default router;
+export default imgRouter;
