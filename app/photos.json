@@ -1,27 +1,43 @@
 [
      {
-          "id": 1715771848313,
-          "album": "albumOne",
-          "originamName": "Zrzut ekranu 2023-04-01 192637.png",
-          "url": "upload\\albumOne\\52427525136de593a0060f101",
-          "lastChange": "original",
+          "id": 1715848569278,
+          "album": "a",
+          "originamName": "tablet3.jpg",
+          "url": "upload\\a\\d8b3b82c259439729160c1c00",
+          "lastChange": 4,
           "history": [
                {
                     "status": "original",
-                    "timestamp": 1715771848313
+                    "timestamp": 1715848569278
+               },
+               {
+                    "status": 1,
+                    "timestamp": 1715848702944
+               },
+               {
+                    "status": 2,
+                    "timestamp": 1715848716080
+               },
+               {
+                    "status": 3,
+                    "timestamp": 1715848717249
+               },
+               {
+                    "status": 4,
+                    "timestamp": 1715848718111
                }
           ]
      },
      {
-          "id": 1715771864787,
-          "album": "albumOne",
-          "originamName": "Zrzut ekranu 2023-04-01 192637.png",
-          "url": "upload\\albumOne\\1a88c1c86bb45986f9f1b8600",
+          "id": 1715848577449,
+          "album": "a",
+          "originamName": "tablet3.jpg",
+          "url": "upload\\a\\d8b3b82c259439729160c1c01",
           "lastChange": "original",
           "history": [
                {
                     "status": "original",
-                    "timestamp": 1715771864787
+                    "timestamp": 1715848577449
                }
           ]
      }
