@@ -1,8 +1,9 @@
 import fs, { mkdir } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { photos, add } from './model.js';
+import { photos, add, tags } from './model.js';
 import { replace, replaceSingle } from './model.js';
+import { addTag } from './tagsController.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,14 @@ const getAllPhotosData = () => {
 
 const getSiglePhotoData = (id) => {
     return photos.find(photo => photo.id == id);
+}
+
+const getPhotoTags = (id) => {
+    const photo = photos.find(photo => photo.id == id);
+    if (!photo) {
+        return 'Photo with id ' + id + ' not found!';
+    }
+    return { 'id': photo.id, 'tags': photo.tags };
 }
 
 const deleteSinglePhotoData = (id) => {
@@ -64,4 +73,25 @@ const patchSinglePhotoData = (id) => {
     }
 }
 
-export { photoDataHandler, getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData, patchSinglePhotoData };
+const addTagsToPhotoData = (id, tagsAdd) => {
+    const photo = photos.find(photo => photo.id == id);
+    if (!photo) {
+        return 'Photo with id ' + id + ' not found!';
+    }
+    if (!photo.tags) {
+        photo.tags = [];
+    }
+    for (let element of tagsAdd) {
+        if (photo.tags.find(tag => tag.name == element)) {
+            continue;
+        }
+        if (!tags.find(tag => tag.name == element)) {
+            addTag({ 'name': [element], 'popularity': [1] });
+        }
+        photo.tags.push({ "name": element });
+    }
+    replaceSingle(photo, id);
+    return 'Tags added successfully!';
+}
+
+export { photoDataHandler, getPhotoTags, getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData, patchSinglePhotoData, addTagsToPhotoData };

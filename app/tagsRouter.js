@@ -41,7 +41,7 @@ const tagsRouter = async (req, res) => {
                 console.error(err);
                 return;
             }
-            message = addTag(fields);
+            message = addTag(parseInt(fields));
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end(message);
         });
