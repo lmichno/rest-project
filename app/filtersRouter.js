@@ -19,6 +19,11 @@ const filtersRouter = async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end(JSON.stringify(photo, null, 5));
     }
+    else if (req.url == '/api/filters' && req.method == 'POST') {
+
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Filtering photo');
+    }
 }
 
 export default filtersRouter;
