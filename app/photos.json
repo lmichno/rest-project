@@ -53,11 +53,28 @@
           "album": "a",
           "originamName": "tablet3.jpg",
           "url": "upload\\a\\d8b3b82c259439729160c1c01",
-          "lastChange": "original",
+          "lastChange": "grayscale",
           "history": [
                {
                     "status": "original",
                     "timestamp": 1715848577449
+               },
+               {
+                    "status": "grayscale",
+                    "timestamp": 1717664646889,
+                    "url": "upload\\a\\d8b3b82c259439729160c1c01_grayscale"
+               },
+               {
+                    "status": "grayscale",
+                    "timestamp": 1717666131782,
+                    "url": "upload\\a\\d8b3b82c259439729160c1c01_grayscale"
+               }
+          ],
+          "filters": [
+               {
+                    "filter": "grayscale",
+                    "timestamp": 1717666131782,
+                    "url": "upload\\a\\d8b3b82c259439729160c1c01_grayscale"
                }
           ]
      }

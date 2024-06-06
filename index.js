@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { tagsRouter } from './app/tagsRouter.js';
 import filtersRouter from './app/filtersRouter.js';
+import getImageRouter from './app/getImageRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,6 +43,9 @@ createServer((req, res) => {
     //filters router
     else if (req.url.search("/api/filters") != -1) {
         filtersRouter(req, res)
+    }
+    else if (req.url.search('/api/getImage') != -1) {
+        getImageRouter(req, res)
     }
 })
     .listen(3000, () => console.log("listen on 3000"))

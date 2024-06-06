@@ -62,7 +62,12 @@ const patchSinglePhotoData = (id) => {
             photo.lastChange = 1;
         }
         else {
-            photo.lastChange++;
+            if (typeof photo.lastChange == 'string') {
+                photo.lastChange = 1;
+            }
+            else {
+                photo.lastChange++;
+            }
         }
         photo.history.push({
             'status': photo.lastChange,
@@ -94,4 +99,24 @@ const addTagsToPhotoData = (id, tagsAdd) => {
     return 'Tags added successfully!';
 }
 
-export { photoDataHandler, getPhotoTags, getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData, patchSinglePhotoData, addTagsToPhotoData };
+const addFiltersToPhotoData = (id, filter) => {
+    const photo = photos.find(photo => photo.id == id);
+    if (!photo) {
+        return 'Photo with id ' + id + ' not found!';
+    }
+    photo.lastChange = filter;
+    photo.history.push({
+        'status': filter,
+        'timestamp': new Date().getTime(),
+        'url': path.join(photo.url + '_' + filter)
+    });
+    if (photo.filters == undefined) {
+        photo.filters = [];
+    }
+    photo.filters.push({ "filter": filter, "timestamp": new Date().getTime(), "url": path.join(photo.url + '_' + filter) });
+    replaceSingle(photo, id);
+    return 'Filter added successfully!';
+
+}
+
+export { photoDataHandler, getPhotoTags, getAllPhotosData, getSiglePhotoData, deleteSinglePhotoData, patchSinglePhotoData, addTagsToPhotoData, addFiltersToPhotoData };
