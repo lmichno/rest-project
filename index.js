@@ -8,6 +8,7 @@ import { dirname } from 'path';
 import { tagsRouter } from './app/tagsRouter.js';
 import filtersRouter from './app/filtersRouter.js';
 import getImageRouter from './app/getImageRouter.js';
+import usersRouter from './app/userRouter.js';
 import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,5 +49,8 @@ createServer((req, res) => {
     else if (req.url.search('/api/getImage') != -1) {
         getImageRouter(req, res)
     }
+    else if (req.url == '/api/users' != -1) {
+        usersRouter(req, res)
+    }
 })
-    .listen(process.env.APP_PORT, () => console.log("listen on 3000"))
+    .listen(process.env.APP_PORT, () => console.log("listen on " + process.env.APP_PORT))
