@@ -8,6 +8,7 @@ import { dirname } from 'path';
 import { tagsRouter } from './app/tagsRouter.js';
 import filtersRouter from './app/filtersRouter.js';
 import getImageRouter from './app/getImageRouter.js';
+import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,4 +49,4 @@ createServer((req, res) => {
         getImageRouter(req, res)
     }
 })
-    .listen(3000, () => console.log("listen on 3000"))
+    .listen(process.env.APP_PORT, () => console.log("listen on 3000"))
