@@ -32,6 +32,16 @@ fs.readFile(path.join(__dirname, 'app', 'tags.json'), 'utf-8', (err, data) => {
 });
 
 createServer((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', '*, Authorization');
+
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+    }
     //images
     if (req.url.search("/api/photos") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         let token = req.headers.authorization.split(" ")[1]
