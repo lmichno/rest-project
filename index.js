@@ -9,6 +9,7 @@ import { tagsRouter } from './app/tagsRouter.js';
 import filtersRouter from './app/filtersRouter.js';
 import getImageRouter from './app/getImageRouter.js';
 import usersRouter from './app/userRouter.js';
+import { checkToken } from './app/userController.js';
 import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,25 +33,59 @@ fs.readFile(path.join(__dirname, 'app', 'tags.json'), 'utf-8', (err, data) => {
 
 createServer((req, res) => {
     //images
-
-    if (req.url.search("/api/photos") != -1) {
-        imgRouter(req, res)
+    if (req.url.search("/api/photos") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        let token = req.headers.authorization.split(" ")[1]
+        if (checkToken(token)) {
+            imgRouter(req, res)
+        }
+        else {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            res.end('Unauthorized');
+        }
     }
 
     //tags
 
-    else if (req.url.search("/api/tags") != -1) {
-        tagsRouter(req, res)
+    else if (req.url.search("/api/tags") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        let token = req.headers.authorization.split(" ")[1]
+        if (checkToken(token)) {
+            tagsRouter(req, res)
+        }
+        else {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            res.end('Unauthorized');
+        }
+
     }
     //filters router
-    else if (req.url.search("/api/filters") != -1) {
-        filtersRouter(req, res)
+    else if (req.url.search("/api/filters") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        let token = req.headers.authorization.split(" ")[1]
+        if (checkToken(token)) {
+            filtersRouter(req, res)
+        }
+        else {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            res.end('Unauthorized');
+        }
+
     }
-    else if (req.url.search('/api/getImage') != -1) {
-        getImageRouter(req, res)
+    else if (req.url.search('/api/getImage') != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        let token = req.headers.authorization.split(" ")[1]
+        if (checkToken(token)) {
+            getImageRouter(req, res)
+        }
+        else {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            res.end('Unauthorized');
+        }
+
     }
-    else if (req.url == '/api/users' != -1) {
+    else if (req.url.search('/api/users') != -1) {
         usersRouter(req, res)
+    }
+    else {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('No token or wrong url');
     }
 })
     .listen(process.env.APP_PORT, () => console.log("listen on " + process.env.APP_PORT))

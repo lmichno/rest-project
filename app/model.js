@@ -2,6 +2,7 @@ import { replacePhotosJsonData, replaceTagsJsonData } from './fileController.js'
 
 let photos = [];
 let tags = [];
+let users = [];
 
 const add = (photo) => {
     photos.push(photo);
@@ -30,4 +31,14 @@ const replaceTags = (data) => {
     replaceTagsJsonData();
 }
 
-export { add, photos, replace, replaceSingle, addTag, tags, replaceTags };
+const addUser = (user) => {
+    users.push(user);
+    console.log(users);
+}
+const confirmUser = (id) => {
+    const index = users.findIndex(user => user.id == id);
+    users[index].confirmed = true;
+    console.log(users);
+}
+
+export { add, photos, replace, replaceSingle, addTag, tags, replaceTags, users, addUser, confirmUser };
