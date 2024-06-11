@@ -32,70 +32,72 @@ fs.readFile(path.join(__dirname, 'app', 'tags.json'), 'utf-8', (err, data) => {
 });
 
 createServer((req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Request-Method', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', '*, Authorization');
+    setTimeout(() => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Request-Method', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', '*, Authorization');
 
-    if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return;
-    }
-    //images
-    if (req.url.search("/api/photos") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        let token = req.headers.authorization.split(" ")[1]
-        if (checkToken(token)) {
-            imgRouter(req, res)
+        if (req.method === 'OPTIONS') {
+            res.writeHead(200);
+            res.end();
+            return;
+        }
+        //images
+        if (req.url.search("/api/photos") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            let token = req.headers.authorization.split(" ")[1]
+            if (checkToken(token)) {
+                imgRouter(req, res)
+            }
+            else {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('Unauthorized');
+            }
+        }
+
+        //tags
+
+        else if (req.url.search("/api/tags") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            let token = req.headers.authorization.split(" ")[1]
+            if (checkToken(token)) {
+                tagsRouter(req, res)
+            }
+            else {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('Unauthorized');
+            }
+
+        }
+        //filters router
+        else if (req.url.search("/api/filters") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            let token = req.headers.authorization.split(" ")[1]
+            if (checkToken(token)) {
+                filtersRouter(req, res)
+            }
+            else {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('Unauthorized');
+            }
+
+        }
+        else if (req.url.search('/api/getImage') != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            let token = req.headers.authorization.split(" ")[1]
+            if (checkToken(token)) {
+                getImageRouter(req, res)
+            }
+            else {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('Unauthorized');
+            }
+
+        }
+        else if (req.url.search('/api/users') != -1) {
+            usersRouter(req, res)
         }
         else {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
-            res.end('Unauthorized');
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('No token or wrong url');
         }
-    }
-
-    //tags
-
-    else if (req.url.search("/api/tags") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        let token = req.headers.authorization.split(" ")[1]
-        if (checkToken(token)) {
-            tagsRouter(req, res)
-        }
-        else {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
-            res.end('Unauthorized');
-        }
-
-    }
-    //filters router
-    else if (req.url.search("/api/filters") != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        let token = req.headers.authorization.split(" ")[1]
-        if (checkToken(token)) {
-            filtersRouter(req, res)
-        }
-        else {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
-            res.end('Unauthorized');
-        }
-
-    }
-    else if (req.url.search('/api/getImage') != -1 && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        let token = req.headers.authorization.split(" ")[1]
-        if (checkToken(token)) {
-            getImageRouter(req, res)
-        }
-        else {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
-            res.end('Unauthorized');
-        }
-
-    }
-    else if (req.url.search('/api/users') != -1) {
-        usersRouter(req, res)
-    }
-    else {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('No token or wrong url');
-    }
+    }, 200);
 })
     .listen(process.env.APP_PORT, () => console.log("listen on " + process.env.APP_PORT))

@@ -24,10 +24,7 @@ const userRegisterHandler = async (user) => {
     }
     addUser(user);
     let token = createToken(user.id, user.email, "1h");
-    return `Skopiuj poniższy link do przeglądarki
-    http://localhost:3000/api/users/confirm/${token}
-    w celu potwierdzenia konta
-    Uwaga: link jest ważny przez godzinę`
+    return `Skopiuj poniższy link do przeglądarki http://localhost:3000/api/users/confirm/${token} w celu potwierdzenia konta Uwaga: link jest ważny przez godzinę`
 };
 
 const createToken = (id, email, time) => {

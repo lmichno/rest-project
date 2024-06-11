@@ -25,7 +25,7 @@ const usersRouter = async (req, res) => {
             let user = fields.data[0];
             user = JSON.parse(user);
             if (!user) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Bad data');
             }
             else {
@@ -34,12 +34,12 @@ const usersRouter = async (req, res) => {
                 let password = user.pass;
                 let lastName = user.lastName;
                 if (!name || !email || !password || !lastName) {
-                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
                     res.end('Bad data');
                 }
                 else {
                     if (users.find(user => user.email == email)) {
-                        res.writeHead(404, { 'Content-Type': 'text/plain' });
+                        res.writeHead(200, { 'Content-Type': 'text/plain' });
                         res.end('User already exists');
 
                     }
@@ -72,14 +72,14 @@ const usersRouter = async (req, res) => {
             let data = fields.data[0];
             data = JSON.parse(data);
             if (!data) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Bad data');
             }
             let email = data.email;
             let password = data.pass;
             let user = users.find(user => user.email == email);
             if (!user) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('User not found');
             }
             else {
@@ -90,12 +90,12 @@ const usersRouter = async (req, res) => {
                         res.end(loginToken);
                     }
                     else {
-                        res.writeHead(404, { 'Content-Type': 'text/plain' });
+                        res.writeHead(200, { 'Content-Type': 'text/plain' });
                         res.end('Wrong password');
                     }
                 }
                 else {
-                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
                     res.end('User not confirmed');
                 }
             }
