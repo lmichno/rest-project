@@ -87,7 +87,7 @@ const usersRouter = async (req, res) => {
                     if (bcryptjs.compare(password, user.password)) {
                         let loginToken = createToken(user.id, user.email, "10m");
                         res.writeHead(200, { 'Content-Type': 'text/plain' });
-                        res.end(loginToken);
+                        res.end('Token:' + loginToken);
                     }
                     else {
                         res.writeHead(200, { 'Content-Type': 'text/plain' });

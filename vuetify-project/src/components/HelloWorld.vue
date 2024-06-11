@@ -136,8 +136,22 @@
     const registered = ref(false);
     const registeredInfo = ref('Error');
 
-    const login = () => {
-      // Perform login logic here
+    const login = async () => {
+      isLoading.value = true;
+      const form = new FormData();
+      form.append('data', `{ "email": "${email.value}", "pass": "${pass.value}"}`);
+      const response = await postDataNoToken('/api/users/login', form)
+        if (response.includes('Token')) {
+          toogleSnackbar('User logged in successfully', 'success');
+          isLoading.value = false;
+          const token = response.match(/Token:(.+)/)[1];
+          const store = useAppStore();
+          store.setToken(token);
+        } else {
+          toogleSnackbar(response, 'error');
+          isLoading.value = false;
+        }
+      
     };
 
     const register = async () => {
@@ -146,7 +160,7 @@
       form.append('data', `{ "email": 
       "${email.value}", "pass": "${pass.value}", "name": "${name.value}", "lastName": "${lastName.value}"}`);
       console.log(form);
-      const response = await postData('/api/users/register', form);
+      const response = await postDataNoToken('/api/users/register', form);
       console.log('b ' + response);
       if (response.includes('Skopiuj')) {
         toogleSnackbar('User registered successfully', 'success');
