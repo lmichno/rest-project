@@ -64,7 +64,7 @@ const usersRouter = async (req, res) => {
     }
     else if (req.url == '/api/users/login' && req.method == 'POST') {
         let form = formidable({});
-        form.parse(req, (err, fields, files) => {
+        form.parse(req, async (err, fields, files) => {
             if (err) {
                 console.error(err);
                 return;
@@ -84,7 +84,7 @@ const usersRouter = async (req, res) => {
             }
             else {
                 if (user.confirmed) {
-                    if (bcryptjs.compare(password, user.password)) {
+                    if (await bcryptjs.compare(password, user.password)) {
                         let loginToken = createToken(user.id, user.email, "10m");
                         res.writeHead(200, { 'Content-Type': 'text/plain' });
                         res.end('Token:' + loginToken);

@@ -155,6 +155,7 @@ const login = async () => {
   const form = new FormData();
   form.append('data', `{ "email": "${email.value}", "pass": "${pass.value}"}`);
   const response = await postDataNoToken('/api/users/login', form)
+  console.log(response)
   if (response.includes('Token')) {
     toogleSnackbar('User logged in successfully', 'success');
     isLoading.value = false;
